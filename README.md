@@ -1,6 +1,14 @@
-# Getting Started with Create React App
+# Home Management
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This app is intended to provide helpful functionality for bookkeeping and managing my life.
+
+Current features:
+- List management
+
+Future features:
+- Calendar events and home-page reminders
+- Secure account management and online capabilities
+- Sharing information with other users
 
 ## Available Scripts
 
