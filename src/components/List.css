@@ -9,6 +9,8 @@
     background-color: #fff;
     text-align: center;
     filter: drop-shadow(8px 8px #000);
+    animation: fadeInUp;
+    animation-duration: 0.5s;
 }
 
 h2 {

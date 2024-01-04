@@ -8,6 +8,8 @@
     background-color: #fff;
     text-align: center;
     filter: drop-shadow(8px 8px #000);
+    animation: fadeInUp;
+    animation-duration: 0.5s;
 }
 
 .input-container {
@@ -33,7 +35,7 @@ input {
 }
 
 .login-button {
-    background-color: #4caf50;
+    background-color: #3498db;
     color: #fff;
     font-weight: bold;
     padding: 10px;
