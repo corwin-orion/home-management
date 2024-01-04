@@ -1,5 +1,6 @@
-.todo-list-container {
+.list-container {
     max-width: 300px;
+    min-height: 250px;
     margin: auto;
     padding: 20px;
     border: 1px solid #ccc;

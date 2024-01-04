@@ -9,5 +9,5 @@ body {
 }
 
 .app-container {
-  min-width: 500px;
+  width: 500px;
 }
