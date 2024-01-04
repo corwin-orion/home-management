@@ -1,12 +1,19 @@
 # Home Management
 
-This app is intended to provide helpful functionality for bookkeeping and managing my life.
+This app is intended to provide helpful functionality for bookkeeping and household management.
 
-Current features:
+It implements practices such as:
+- State management
+- Component composition
+- Extensibility
+- Clear data flow between components
+- CSS animation/beautification
+
+## Current features:
 - List management
 
-Future features:
-- Mobile optimization
+## Future features:
+- Mobile optimization + increase responsiveness
 - Calendar events and home-page reminders
 - Secure account management and online capabilities
 - Persistent storage across devices
