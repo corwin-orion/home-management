@@ -16,7 +16,6 @@ const Overview = ({ username, onSignOut, onListSelect, onDeleteList, onAddList, 
       <h2>Welcome, {username}!</h2>
       <h3>Your Lists:</h3>
       <ul>
-        {/* Display existing lists with delete buttons */}
         {lists.map((listName) => (
           <li key={listName}>
             <span onClick={() => onListSelect(listName)}>{listName}</span>
@@ -24,7 +23,6 @@ const Overview = ({ username, onSignOut, onListSelect, onDeleteList, onAddList, 
           </li>
         ))}
       </ul>
-      {/* Add a text field for adding a new list */}
       <input
         type="text"
         placeholder="Enter a new list"

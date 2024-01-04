@@ -22,7 +22,6 @@ const List = ({ listName, items, onBack, onDeleteItem, onAddItem }) => {
           </li>
         ))}
       </ul>
-      {/* Add a text field for adding a new item */}
       <input
         type="text"
         placeholder="Enter a new item"
