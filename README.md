@@ -9,6 +9,7 @@ Future features:
 - Mobile optimization
 - Calendar events and home-page reminders
 - Secure account management and online capabilities
+- Persistent storage across devices
 - Sharing information with other users
 
 ## How to Use
