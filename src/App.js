@@ -1,8 +1,7 @@
-// src/App.js
 import React, { useState } from 'react';
 import Login from './Login';
-import TodoList from './TodoList';
-import './App.css'; // Import or create a CSS file for App component styling
+import List from './List';
+import './App.css';
 
 function App() {
   const [user, setUser] = useState(null);
@@ -14,7 +13,7 @@ function App() {
   return (
     <div className="app-container">
       {user ? (
-        <TodoList user={user} />
+        <List user={user} />
       ) : (
         <Login onLogin={handleLogin} />
       )}

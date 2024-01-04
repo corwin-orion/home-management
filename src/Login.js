@@ -1,6 +1,5 @@
-// src/Login.js
 import React, { useState } from 'react';
-import './Login.css'; // Import the CSS file
+import './Login.css';
 
 const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
@@ -11,7 +10,6 @@ const Login = ({ onLogin }) => {
     // Perform authentication logic here
     // For simplicity, checks if username and password are not empty
     if (username && password) {
-      // Simulating a successful login
       onLogin(username);
     } else {
       setError('Please enter both username and password');

@@ -1,8 +1,7 @@
-// src/TodoList.js
 import React, { useState, useEffect, useCallback } from 'react';
-import './TodoList.css'; // Import the CSS file
+import './List.css';
 
-const TodoList = ({ user }) => {
+const List = ({ user }) => {
   const [todos, setTodos] = useState([]);
   const [newTodo, setNewTodo] = useState('');
 
@@ -11,19 +10,19 @@ const TodoList = ({ user }) => {
       const storedTodos = localStorage.getItem(`todos_${user}`);
       if (storedTodos) {
         setTodos(prevTodos => [...prevTodos, ...JSON.parse(storedTodos)]);
-        console.log('Loaded todos from localStorage:', JSON.parse(storedTodos));
+        // console.log('Loaded todos from localStorage:', JSON.parse(storedTodos));
       }
     } catch (error) {
-      console.error('Error loading todos from localStorage:', error);
+      // console.error('Error loading todos from localStorage:', error);
     }
   }, [user]);
 
   const saveTodosToLocalStorage = useCallback(() => {
     try {
       localStorage.setItem(`todos_${user}`, JSON.stringify(todos));
-      console.log('Saved todos to localStorage:', todos);
+      // console.log('Saved todos to localStorage:', todos);
     } catch (error) {
-      console.error('Error saving todos to localStorage:', error);
+      // console.error('Error saving todos to localStorage:', error);
     }
   }, [user, todos]);
 
@@ -58,7 +57,7 @@ const TodoList = ({ user }) => {
           {todos.map((todo) => (
             <li key={todo.id}>
               {todo.text}
-              <button onClick={() => removeTodo(todo.id)}>Remove</button>
+              <button onClick={() => removeTodo(todo.id)}>-</button>
             </li>
           ))}
         </ul>
@@ -67,10 +66,10 @@ const TodoList = ({ user }) => {
             type="text"
             value={newTodo}
             onChange={(e) => setNewTodo(e.target.value)}
-            placeholder="Add new todo"
+            placeholder="Add new list item"
           />
           <button className="add-button" onClick={addTodo}>
-            Add
+            +
           </button>
         </div>
       </div>
@@ -78,4 +77,4 @@ const TodoList = ({ user }) => {
   );
 };
 
-export default TodoList;
+export default List;
