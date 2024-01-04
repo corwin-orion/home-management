@@ -6,6 +6,7 @@ Current features:
 - List management
 
 Future features:
+- Mobile optimization
 - Calendar events and home-page reminders
 - Secure account management and online capabilities
 - Sharing information with other users
