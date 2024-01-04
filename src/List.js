@@ -10,19 +10,15 @@ const List = ({ user }) => {
       const storedTodos = localStorage.getItem(`todos_${user}`);
       if (storedTodos) {
         setTodos(prevTodos => [...prevTodos, ...JSON.parse(storedTodos)]);
-        // console.log('Loaded todos from localStorage:', JSON.parse(storedTodos));
       }
     } catch (error) {
-      // console.error('Error loading todos from localStorage:', error);
     }
   }, [user]);
 
   const saveTodosToLocalStorage = useCallback(() => {
     try {
       localStorage.setItem(`todos_${user}`, JSON.stringify(todos));
-      // console.log('Saved todos to localStorage:', todos);
     } catch (error) {
-      // console.error('Error saving todos to localStorage:', error);
     }
   }, [user, todos]);
 
