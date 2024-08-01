@@ -3,12 +3,13 @@ import { TouchableOpacity, StyleSheet, StyleProp, ViewStyle } from 'react-native
 
 interface MenuItemProps {
   children: React.ReactNode;
+  onPress?: () => void;
   style?: StyleProp<ViewStyle>;
 }
 
-const MenuItem = ({ children, style }: MenuItemProps) => {
+const MenuItem = ({ children, onPress, style }: MenuItemProps) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => onPress}>
       {children}
     </TouchableOpacity>
   )

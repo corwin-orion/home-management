@@ -4,11 +4,14 @@ import { FIREBASE_AUTH } from '@/FirebaseConfig';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { router } from 'expo-router';
 import PageContainer from '@/components/PageContainer';
+import { useSession } from '@/contexts/SessionContext';
+import { getUser } from '@/helpers/getUser';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const { setUser } = useSession();
 
   const auth = FIREBASE_AUTH;
 
@@ -17,7 +20,11 @@ export default function Login() {
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
       console.log(response);
-      router.navigate('/households');
+      const userResponse = await getUser();
+      if (userResponse) {
+        setUser(userResponse);
+        router.navigate('/households');
+      }
     } catch (error: any) {
       console.log(error);
       alert(error.message);
