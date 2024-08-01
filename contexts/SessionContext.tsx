@@ -43,9 +43,8 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
   }
 
   async function updateUser(name: string, color: string) {
-    if (!user) {
-      return;
-    }
+    if (!user) return;
+
     try {
       // Get a reference to the user document in Firestore
       const userRef = doc(FIRESTORE, `users/${user.id}`);

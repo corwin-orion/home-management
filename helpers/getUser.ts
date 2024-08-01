@@ -7,18 +7,14 @@ export async function getUser(): Promise<User | null> {
   const user = FIREBASE_AUTH.currentUser;
 
   // If there is no user, return null
-  if (!user) {
-    return null;
-  }
+  if (!user) return null;
 
   // Get the user document from Firestore
   const userDoc = await getDoc(doc(FIRESTORE, `users/${user.uid}`));
 
   // If the user document doesn't exist, return null
-  if (!userDoc.exists()) {
-    return null;
-  }
+  if (!userDoc.exists()) return null;
 
   // Return the user data
-  return userDoc.data() as User;
+  return { id: user.uid, ...userDoc.data() } as User;
 }

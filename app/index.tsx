@@ -7,6 +7,7 @@ import PageContainer from '@/components/PageContainer';
 import { useSession } from '@/contexts/SessionContext';
 import { getUser } from '@/helpers/getUser';
 import { globalStyles } from '@/constants/Styles';
+import { User } from '@/constants/Types';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -20,8 +21,7 @@ export default function Login() {
     setLoading(true);
     try {
       const response = await signInWithEmailAndPassword(auth, email, password);
-      console.log(response);
-      const userResponse = await getUser();
+      const userResponse: User | null = await getUser();
       if (userResponse) {
         setUser(userResponse);
         router.navigate('/households');
