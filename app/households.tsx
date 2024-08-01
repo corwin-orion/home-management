@@ -12,7 +12,7 @@ import { useSession } from '@/contexts/SessionContext';
 import { globalStyles } from '@/constants/Styles';
 
 export default function Login() {
-  const { user, setUser } = useSession();
+  const { user, updateUser } = useSession();
   const [households, setHouseholds] = useState<Household[]>([]);
   const [showNameModal, setShowNameModal] = useState(false);
   const [newName, setNewName] = useState(user?.name);
@@ -38,6 +38,12 @@ export default function Login() {
     getHouseholds();
   }, []);
 
+  const handleNameChange = () => {
+    if (!user) return;
+    const name: string = newName || user.name;
+    updateUser(name, user.color);
+  }
+
   return (
     <PageContainer style={{ gap: 10 }}>
       <View style={styles.header}>
@@ -47,14 +53,14 @@ export default function Login() {
         }}>
           <Feather name='log-out' size={24} color='black' />
         </TouchableOpacity>
-        <View style={styles.nameContainer}>
-          <ThemedText type='subtitle' style={{ color: user?.color }}>{user?.name}</ThemedText>
-          <View style={styles.nameButtonsContainer}>
-            <TouchableOpacity onPress={() => setShowNameModal(true)}>
+        <TouchableOpacity onPress={() => setShowNameModal(true)}>
+          <View style={styles.nameContainer}>
+            <ThemedText type='subtitle' style={{ color: user?.color }}>{user?.name}</ThemedText>
+            <View style={styles.nameButtonsContainer}>
               <Feather name='edit' size={24} color='black' />
-            </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        </TouchableOpacity>
         <View></View>
       </View>
       <ThemedText type='title' style={{ textAlign: 'center' }}>Select household:</ThemedText>
@@ -72,6 +78,12 @@ export default function Login() {
                   <Feather name='x' size={24} color='black' />
                 </TouchableOpacity>
                 <TextInput style={globalStyles.input} placeholder='New name' value={newName} onChangeText={(text) => setNewName(text)} />
+                <TouchableOpacity onPress={() => {
+                  handleNameChange();
+                  setShowNameModal(false);
+                }} style={{ alignSelf: 'flex-end' }}>
+                  <Feather name='check' size={24} color='black' />
+                </TouchableOpacity>
               </View>
             </TouchableWithoutFeedback>
           </View>
