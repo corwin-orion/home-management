@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { TextInput, Modal, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { FIREBASE_AUTH, FIRESTORE } from '@/FirebaseConfig';
 import { router } from 'expo-router';
 import PageContainer from '@/components/PageContainer';
@@ -9,10 +9,13 @@ import { ThemedText } from '@/components/ThemedText';
 import MenuItem from '@/components/MenuItem';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { useSession } from '@/contexts/SessionContext';
+import { globalStyles } from '@/constants/Styles';
 
 export default function Login() {
-  const [households, setHouseholds] = useState<Household[]>([]);
   const { user, setUser } = useSession();
+  const [households, setHouseholds] = useState<Household[]>([]);
+  const [showNameModal, setShowNameModal] = useState(false);
+  const [newName, setNewName] = useState(user?.name);
 
   useEffect(() => {
     const getHouseholds = async () => {
@@ -47,7 +50,7 @@ export default function Login() {
         <View style={styles.nameContainer}>
           <ThemedText type='subtitle' style={{ color: user?.color }}>{user?.name}</ThemedText>
           <View style={styles.nameButtonsContainer}>
-            <TouchableOpacity onPress={() => { }}>
+            <TouchableOpacity onPress={() => setShowNameModal(true)}>
               <Feather name='edit' size={24} color='black' />
             </TouchableOpacity>
           </View>
@@ -60,6 +63,20 @@ export default function Login() {
           <ThemedText type='subtitle'>{household.name}</ThemedText>
         </MenuItem>
       ))}
+      <Modal visible={showNameModal} transparent={true}>
+        <TouchableWithoutFeedback onPress={() => setShowNameModal(false)}>
+          <View style={styles.modalBackdrop}>
+            <TouchableWithoutFeedback>
+              <View style={styles.modalCard}>
+                <TouchableOpacity onPress={() => setShowNameModal(false)} style={{ alignSelf: 'flex-end' }}>
+                  <Feather name='x' size={24} color='black' />
+                </TouchableOpacity>
+                <TextInput style={globalStyles.input} placeholder='New name' value={newName} onChangeText={(text) => setNewName(text)} />
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        </TouchableWithoutFeedback>
+      </Modal>
     </PageContainer>
   );
 }
@@ -79,5 +96,21 @@ const styles = StyleSheet.create({
   nameButtonsContainer: {
     flexDirection: 'row',
     gap: 3,
-  }
+  },
+  modalBackdrop: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  modalCard: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '90%',
+    height: 'auto',
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    gap: 10,
+  },
 });

@@ -6,6 +6,7 @@ import { router } from 'expo-router';
 import PageContainer from '@/components/PageContainer';
 import { useSession } from '@/contexts/SessionContext';
 import { getUser } from '@/helpers/getUser';
+import { globalStyles } from '@/constants/Styles';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -49,8 +50,8 @@ export default function Login() {
   return (
     <PageContainer>
       <KeyboardAvoidingView style={styles.container}>
-        <TextInput style={styles.input} value={email} placeholder='Email' onChangeText={(text) => setEmail(text)} autoCapitalize='none' />
-        <TextInput style={styles.input} value={password} placeholder='Password' onChangeText={(text) => setPassword(text)} autoCapitalize='none' secureTextEntry />
+        <TextInput style={globalStyles.input} value={email} placeholder='Email' onChangeText={(text) => setEmail(text)} autoCapitalize='none' />
+        <TextInput style={globalStyles.input} value={password} placeholder='Password' onChangeText={(text) => setPassword(text)} autoCapitalize='none' secureTextEntry />
         {loading ? <ActivityIndicator size='large' color='black' /> :
           <>
             <Button title='Login' onPress={() => handleLogin()} />
@@ -68,12 +69,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 10,
-  },
-  input: {
-    width: '100%',
-    padding: 10,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: 'black',
   }
 });
