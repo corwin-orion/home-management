@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { Household, User } from '@/constants/Types';
-import { FIREBASE_AUTH, FIRESTORE } from "@/private/FirebaseConfig";
+import { auth, db } from "@/private/FirebaseConfig";
 import { getDoc, doc, updateDoc } from "firebase/firestore";
 
 // Define the context types
@@ -23,7 +23,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 
   async function getUser(): Promise<User | null> {
     // Get the current user from Firebase Auth
-    const user = FIREBASE_AUTH.currentUser;
+    const user = auth.currentUser;
 
     // If there is no user, return null
     if (!user) {
@@ -31,7 +31,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
     }
 
     // Get the user document from Firestore
-    const userDoc = await getDoc(doc(FIRESTORE, `users/${user.uid}`));
+    const userDoc = await getDoc(doc(db, `users/${user.uid}`));
 
     // If the user document doesn't exist, return null
     if (!userDoc.exists()) {
@@ -47,7 +47,7 @@ export const SessionProvider = ({ children }: { children: ReactNode }) => {
 
     try {
       // Get a reference to the user document in Firestore
-      const userRef = doc(FIRESTORE, `users/${user.id}`);
+      const userRef = doc(db, `users/${user.id}`);
       // Update the user document
       await updateDoc(userRef, { name, color });
       setUser({ ...user, name, color })

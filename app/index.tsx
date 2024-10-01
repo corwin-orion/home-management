@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, TextInput, ActivityIndicator, Button, KeyboardAvoidingView } from 'react-native';
-import { FIREBASE_AUTH } from '@/private/FirebaseConfig';
+import { auth } from '@/private/FirebaseConfig';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { router } from 'expo-router';
 import PageContainer from '@/components/PageContainer';
@@ -8,14 +8,14 @@ import { useSession } from '@/contexts/SessionContext';
 import { getUser } from '@/helpers/getUser';
 import { globalStyles } from '@/constants/Styles';
 import { User } from '@/constants/Types';
+import ThemedInput from '@/components/ThemedInput';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const { setUser } = useSession();
-
-  const auth = FIREBASE_AUTH;
 
   const handleLogin = async () => {
     setLoading(true);
@@ -47,12 +47,14 @@ export default function Login() {
     }
   }
 
+  const activityIndicatorColor = useThemeColor({}, 'icon')
+
   return (
     <PageContainer>
       <KeyboardAvoidingView style={styles.container}>
-        <TextInput style={globalStyles.input} value={email} placeholder='Email' onChangeText={(text) => setEmail(text)} autoCapitalize='none' />
-        <TextInput style={globalStyles.input} value={password} placeholder='Password' onChangeText={(text) => setPassword(text)} autoCapitalize='none' secureTextEntry />
-        {loading ? <ActivityIndicator size='large' color='black' /> :
+        <ThemedInput value={email} placeholder='Email' onChangeText={(text) => setEmail(text)} autoCapitalize='none' />
+        <ThemedInput value={password} placeholder='Password' onChangeText={(text) => setPassword(text)} autoCapitalize='none' secureTextEntry />
+        {loading ? <ActivityIndicator size='large' color={activityIndicatorColor} /> :
           <>
             <Button title='Login' onPress={() => handleLogin()} />
             <Button title='Create account' onPress={() => handleSignup()} />

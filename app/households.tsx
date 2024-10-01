@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { TextInput, Modal, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
-import { FIREBASE_AUTH, FIRESTORE } from '@/private/FirebaseConfig';
+import { auth, db } from '@/private/FirebaseConfig';
 import { router } from 'expo-router';
 import PageContainer from '@/components/PageContainer';
 import { collection, query, where, getDocs } from 'firebase/firestore';
@@ -13,7 +13,7 @@ import { globalStyles } from '@/constants/Styles';
 import FeatherButton from '@/components/FeatherButton';
 
 export default function Login() {
-  const { user, updateUser } = useSession();
+  const { user, updateUser, setHousehold } = useSession();
   const [households, setHouseholds] = useState<Household[]>([]);
   const [showNameModal, setShowNameModal] = useState(false);
   const [newName, setNewName] = useState(user?.name);
@@ -22,15 +22,15 @@ export default function Login() {
     const getHouseholds = async () => {
       try {
         // Create a query to get the households with the user's ID in their members list.
-        const householdRef = collection(FIRESTORE, 'households');
-        const q = query(householdRef, where('ownerId', '==', FIREBASE_AUTH.currentUser?.uid));
+        const householdRef = collection(db, 'households');
+        const q = query(householdRef, where('ownerId', '==', auth.currentUser?.uid));
 
         const householdSnapshot = await getDocs(q);
         const householdList = householdSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Household));
 
         // Do something with the household list
         setHouseholds(householdList);
-        console.log(householdList);
+        console.log('List of households in db:', householdList);
       } catch (error) {
         console.error("Error getting households: ", error);
       }
@@ -51,7 +51,7 @@ export default function Login() {
         <FeatherButton
           icon='log-out'
           onPress={() => {
-            FIREBASE_AUTH.signOut();
+            auth.signOut();
             router.navigate('/');
           }} />
         <View style={styles.nameContainer}>
@@ -65,12 +65,18 @@ export default function Login() {
         {/* 👇 Extra view for spacing */}
         <View></View>
       </View>
+      {/* Main content (households) */}
       <ThemedText type='title' style={{ textAlign: 'center' }}>Select household:</ThemedText>
       {households.map(household => (
-        <MenuItem key={household.id}>
+        <MenuItem key={household.id} onPress={() => {
+          console.log('Selected', household);
+          setHousehold(household);
+          router.navigate('/(tabs)');
+        }}>
           <ThemedText type='subtitle'>{household.name}</ThemedText>
         </MenuItem>
       ))}
+      {/* Name change modal */}
       <Modal visible={showNameModal} transparent={true}>
         <TouchableWithoutFeedback onPress={() => setShowNameModal(false)}>
           <View style={styles.modalBackdrop}>

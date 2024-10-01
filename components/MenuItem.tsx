@@ -13,7 +13,7 @@ interface MenuItemProps {
 const MenuItem = ({ children, onPress, style, lightColor, darkColor }: MenuItemProps) => {
   const borderColor = useThemeColor({ light: lightColor, dark: darkColor }, 'icon')
   return (
-    <TouchableOpacity style={[{ borderColor }, styles.container, style]} onPress={() => onPress}>
+    <TouchableOpacity style={[{ borderColor }, styles.container, style]} onPress={onPress}>
       {children}
     </TouchableOpacity>
   )
