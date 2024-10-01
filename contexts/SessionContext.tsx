@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { Household, User } from '@/constants/Types';
-import { FIREBASE_AUTH, FIRESTORE } from "@/FirebaseConfig";
+import { FIREBASE_AUTH, FIRESTORE } from "@/private/FirebaseConfig";
 import { getDoc, doc, updateDoc } from "firebase/firestore";
 
 // Define the context types

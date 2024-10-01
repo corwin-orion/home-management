@@ -7,7 +7,7 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { onAuthStateChanged, User } from 'firebase/auth';
-import { FIREBASE_AUTH } from '@/FirebaseConfig';
+import { FIREBASE_AUTH } from '@/private/FirebaseConfig';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { SessionProvider } from '@/contexts/SessionContext';
 

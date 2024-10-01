@@ -1,5 +1,5 @@
 import { User } from "@/constants/Types";
-import { FIREBASE_AUTH, FIRESTORE } from "@/FirebaseConfig";
+import { FIREBASE_AUTH, FIRESTORE } from "@/private/FirebaseConfig";
 import { getDoc, doc } from "firebase/firestore";
 
 export async function getUser(): Promise<User | null> {

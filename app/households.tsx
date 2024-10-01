@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { TextInput, Modal, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
-import { FIREBASE_AUTH, FIRESTORE } from '@/FirebaseConfig';
+import { FIREBASE_AUTH, FIRESTORE } from '@/private/FirebaseConfig';
 import { router } from 'expo-router';
 import PageContainer from '@/components/PageContainer';
 import { collection, query, where, getDocs } from 'firebase/firestore';
@@ -10,6 +10,7 @@ import MenuItem from '@/components/MenuItem';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import { useSession } from '@/contexts/SessionContext';
 import { globalStyles } from '@/constants/Styles';
+import FeatherButton from '@/components/FeatherButton';
 
 export default function Login() {
   const { user, updateUser } = useSession();
@@ -47,20 +48,21 @@ export default function Login() {
   return (
     <PageContainer style={{ gap: 10 }}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => {
-          FIREBASE_AUTH.signOut();
-          router.navigate('/');
-        }}>
-          <Feather name='log-out' size={24} color='black' />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => setShowNameModal(true)}>
-          <View style={styles.nameContainer}>
-            <ThemedText type='subtitle' style={{ color: user?.color }}>{user?.name}</ThemedText>
-            <View style={styles.nameButtonsContainer}>
-              <Feather name='edit' size={24} color='black' />
-            </View>
+        <FeatherButton
+          icon='log-out'
+          onPress={() => {
+            FIREBASE_AUTH.signOut();
+            router.navigate('/');
+          }} />
+        <View style={styles.nameContainer}>
+          <ThemedText type='subtitle' style={{ color: user?.color }}>{user?.name}</ThemedText>
+          <View style={styles.nameButtonsContainer}>
+            <FeatherButton
+              icon='edit'
+              onPress={() => setShowNameModal(true)} />
           </View>
-        </TouchableOpacity>
+        </View>
+        {/* 👇 Extra view for spacing */}
         <View></View>
       </View>
       <ThemedText type='title' style={{ textAlign: 'center' }}>Select household:</ThemedText>

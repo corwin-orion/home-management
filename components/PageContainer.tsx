@@ -1,15 +1,19 @@
 import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useThemeColor } from '@/hooks/useThemeColor';
 
 interface PageContainerProps {
   children: React.ReactNode;
+  lightColor?: string;
+  darkColor?: string;
   style?: StyleProp<ViewStyle>;
 }
 
-const PageContainer = ({ children, style }: PageContainerProps) => {
+const PageContainer = ({ children, style, lightColor, darkColor }: PageContainerProps) => {
+  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background')
   return (
-    <SafeAreaView style={[styles.container, style]}>
+    <SafeAreaView style={[{ backgroundColor }, styles.container, style]}>
       {children}
     </SafeAreaView>
   );
